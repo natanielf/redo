@@ -1,0 +1,37 @@
+import { Button, ListView, LineEdit, HorizontalBox, VerticalBox } from "std-widgets.slint";
+
+export struct Task := {
+    text: string,
+    is_completed: bool,
+}
+
+export AppWindow := Window {
+    preferred-height: 200px;
+    preferred-width: 300px;
+    title: "Redo";
+    callback add-task(string);
+    property <[Task]> tasks: [];
+    
+    VerticalBox {
+        HorizontalBox {
+            input := LineEdit {
+                height: 30px;
+                placeholder-text: "Add a new task...";
+                accepted(text) => {
+                    add-task(text);
+                    self.text = "";
+                }
+             }
+             add-btn := Button {
+                 height: 30px;
+                 width: 50px;
+                 text: "✓";
+                 enabled: input.text != "";
+                 clicked => { 
+                     add-task(input.text);
+                     input.text = "";
+                  }
+             }
+         }
+     }
+}

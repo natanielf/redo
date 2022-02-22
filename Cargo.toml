@@ -1,0 +1,12 @@
+[package]
+name = "redo"
+version = "0.1.0"
+authors = ["natanielf <natanielfarzan@gmail.com>"]
+edition = "2018"
+build = "build.rs"
+
+[dependencies]
+slint = "0.2"
+
+[build-dependencies]
+slint-build = "0.2"
