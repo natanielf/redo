@@ -1,7 +1,9 @@
+use std::rc::Rc;
+
 slint::include_modules!();
 
 fn main() {
-    let tasks = Vec::new();
+    let tasks = Rc::new(slint::VecModel::<Task>::from(Vec::new()));
 
     let ui = AppWindow::new();
 
@@ -14,6 +16,8 @@ fn main() {
             })
         }
     });
+
+    ui.set_tasks(tasks.into());
 
     ui.run();
 }

@@ -1,4 +1,4 @@
-import { Button, ListView, LineEdit, HorizontalBox, VerticalBox } from "std-widgets.slint";
+import { Button, CheckBox, ListView, LineEdit, HorizontalBox, VerticalBox } from "std-widgets.slint";
 
 export struct Task := {
     text: string,
@@ -25,12 +25,23 @@ export AppWindow := Window {
              add-btn := Button {
                  height: 30px;
                  width: 50px;
-                 text: "✓";
+                 text: "+";
                  enabled: input.text != "";
                  clicked => { 
                      add-task(input.text);
                      input.text = "";
                   }
+             }
+         }
+         task-list := ListView {
+             for task in tasks: HorizontalLayout {
+                 CheckBox {
+                     text: task.text;
+                     checked: task.is_completed;
+                     toggled => {
+                         task.is_completed = checked;
+                     }
+                 }
              }
          }
      }
