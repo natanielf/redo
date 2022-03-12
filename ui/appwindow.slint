@@ -6,12 +6,14 @@ export struct Task := {
 }
 
 export AppWindow := Window {
-    preferred-height: 200px;
+    preferred-height: 300px;
     preferred-width: 300px;
     title: "Redo";
+    default-font-size: 16px;
     callback add-task(string);
+    callback remove-completed();
     property <[Task]> tasks: [];
-    
+
     VerticalBox {
         HorizontalBox {
             input := LineEdit {
@@ -21,28 +23,39 @@ export AppWindow := Window {
                     add-task(text);
                     self.text = "";
                 }
-             }
-             add-btn := Button {
-                 height: 30px;
-                 width: 50px;
-                 text: "+";
-                 enabled: input.text != "";
-                 clicked => { 
-                     add-task(input.text);
-                     input.text = "";
-                  }
-             }
-         }
-         task-list := ListView {
-             for task in tasks: HorizontalLayout {
-                 CheckBox {
-                     text: task.text;
-                     checked: task.is_completed;
-                     toggled => {
-                         task.is_completed = checked;
-                     }
-                 }
-             }
-         }
-     }
+            }
+            add-btn := Button {
+                height: 30px;
+                width: 50px;
+                font-size: 20px;
+                text: "+";
+                enabled: input.text != "";
+                clicked => { 
+                    add-task(input.text);
+                    input.text = "";
+                }
+            }
+        }
+        task-list := ListView {
+            for task in tasks: HorizontalLayout {
+                CheckBox {
+                    text: task.text;
+                    checked: task.is_completed;
+                    toggled => {
+                        task.is_completed = checked;
+                    }
+                }
+            }
+        }
+        HorizontalBox {
+            alignment: center;
+            remove-completed-btn := Button {
+                height: 30px;
+                font-size: 14px;
+                text: "Remove Completed Tasks";
+                enabled: tasks.length > 0;
+                clicked => { remove-completed(); }
+            }
+        }
+    }
 }
