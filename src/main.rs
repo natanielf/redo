@@ -9,7 +9,7 @@ fn main() {
     let ui = AppWindow::new();
 
     ui.on_add_task({
-        let mut tasks = tasks.clone();
+        let tasks = tasks.clone();
         move |text| {
             tasks.push(Task {
                 text,
